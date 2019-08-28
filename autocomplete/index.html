@@ -72,6 +72,49 @@
         </div>
     </div>
 
+    <script>
+        var aa = $("#search-content").autocomplete({
+            list: [12, 34, 67, 89]
+                //ajax: true,
+                //outerHandle: putAjax
+        });
+
+        function putAjax(val) {
+            // console.log(val);
+            var returnData;
+            var cont = {
+                action: "GET_ZJ_LINE_BASEINFO_PRJ_LINE",
+                content: JSON.stringify({
+                    'LOCA_NAME': "在建工程",
+                    'PRJ_NAME': val
+                }),
+                token: "admin|04da4e807e10466e8f718872f94f733a"
+            }
+
+            $.ajax({
+
+                async: false, //同步或异步获取
+                type: "get",
+                url: "http://192.168.200.132:8081/DCIWebService/rest/hyzj",
+                data: cont,
+                dataType: "json", //数据格式设置为json
+                success: function(result) {
+                    var arr = [];
+                    //return
+
+                    returnData = result;
+                    console.log(result);
+                },
+                error: function(request, textStatus, errorThrown) {
+                    console.log(errorThrown); //失败则直接打印错误
+                }
+            });
+
+        }
+
+        //function rmDuplicOfObj()
+    </script>
+
 </body>
 
 </html>
