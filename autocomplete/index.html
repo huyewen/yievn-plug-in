@@ -52,7 +52,8 @@
             width: 290px;
             height: 50px;
             font-size: 17px;
-            padding-left: 10px;
+            color: #444;
+            padding: 0px 10px;
             outline: none;
             border: none;
             border-radius: 2px;
@@ -75,8 +76,7 @@
     <script src="js/autocomplete.js"></script>
     <script>
         var aa = $("#search-content").autocomplete({
-            //list: [12, 34, 67, 89]
-            ajax: true,
+            isAjax: true,
             outerHandle: putAjax
         });
 
