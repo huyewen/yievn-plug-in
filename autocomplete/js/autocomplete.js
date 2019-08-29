@@ -67,7 +67,7 @@
                     this.setList(this.rmDuplicOfArr(this.options.outerHandle(val))); //通过外部处理函数的ajax获取数据并返回
                     this.print();
                 } else {
-                    alert("无查询来源")
+                    alert("无查询来源");
                 }
             }
         },
