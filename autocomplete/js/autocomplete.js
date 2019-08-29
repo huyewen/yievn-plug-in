@@ -1,6 +1,7 @@
 ;
 
 (function($, window, document, undefined) {
+
     function AutoComplete(element, options) {
         this.element = element;
         this.options = {
@@ -15,34 +16,24 @@
             outerHandle: function() {}, //外部处理函数，可用于Ajax，但要返回处理后的数组列表
             onItemSelect: function() {}
         };
-        // min: options.min,
-        //     selections: options.selections,
-        //     list: options.list,
-        //     caseSensitive: options.caseSensitive,
-        //     maxResults: options.maxResults,
-        //     sortKey: options.sortKey,
-        //     ajax: options.ajax,
-        //     openUp: options.openUp,
-        //     outerHandle: options.outerHandle, //外部处理函数，可用于Ajax，但要返回处理后的数组列表
-        //     onItemSelect: options.onItemSelect
 
-
-        console.log(this.options);
-        this.init(options);
+        $.extend(true, this.options, options);
+        //console.log(options);
+        this.init();
     }
 
     AutoComplete.prototype = {
         constructor: AutoComplete,
 
-        init: function(options) {
+        init: function() {
             var that = this;
             var cpLock = true;
-            this.options = $.extend(this.options, options);
+
             this.element.on("keyup", function(e) {
                 var flag = e.target.isNeedPrevent;
                 var _this = this;
                 setTimeout(function() {
-                    if (!flag) {
+                    if (!flag && $(_this).val() != '') {
                         that.handle($(_this).val());
                     }
                 }, 0)
@@ -54,7 +45,7 @@
             });
 
             this.element.on("input", function(e) {
-                if (!e.target.keyEvent) {
+                if (!e.target.keyEvent && $(this).val() != '') {
                     that.handle($(this).val());
                 }
             })
@@ -70,14 +61,16 @@
         },
 
         handle: function(val) {
-            if (this.options.list.length > 0) { //有传递查询数组
-                console.log(this.options.list);
-                this.setList(this.selectItems(val));
-                this.print();
+            // if (this.options.list.length > 0) { //有传递查询数组
+            //     //console.log(this.options.list);
+            //     this.setList(this.selectItems(val));
+            //     this.print();
 
-            } else if (this.options.ajax) { //需要请求数据,必须使用outerHandle来获取请求的数据，具体如何获得需要自己实现，这里只需获得一个处理后的返回数组
+            // } else 
 
-                this.setList(this.options.outerHandle(val));
+            if (this.options.ajax) { //需要请求数据,必须使用outerHandle来获取请求的数据，具体如何获得需要自己实现，这里只需获得一个处理后的返回数组
+
+                this.setList(this.rmDuplicOfArr(this.options.outerHandle(val)));
                 this.print();
 
             } else {
@@ -91,6 +84,9 @@
         },
 
         print: function() { //打印选项
+            console.log(this.options.list);
+            var $auto_list = $('<ul class="autocomple-list"></ul>');
+
 
         },
 
@@ -104,19 +100,17 @@
             });
         },
 
-        // rmDuplicOfObj: function(obj) { //对象数组去重
-        //     var test = {};
-        //     return obj.reduce(function(item, cur) { //对对象数组根据用户ID进行去重
-        //         test[cur.USER_ID] ? '' : test[cur.USER_ID] = true && item.push(cur);
-        //         return item;
-        //     }, []);
-        // }
-
     }
 
-    $.fn.autocomplete = function(options) {
-        return new AutoComplete($(this), options);
-    }
+    // $.fn.autocomplete = function(options) {
+    //     return new AutoComplete($(this), options);
+    // }
+
+    $.fn.extend({
+        autocomplete: function(options) {
+            return new AutoComplete($(this), options);
+        }
+    })
 
 
 

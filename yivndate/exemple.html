@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>yivndate</title>
+    <link rel="stylesheet" href="css/hywdate.css">
+</head>
+
+<body style="padding-left:150px;">
+    <p>目前组件只支持以下五种类型，尚有不足，还待完善</p>
+
+    日期：<input type="text" class="calendar_date" style="margin-right:100px;margin-top:100px;height: 25px;border-radius: 5px;outline: none;"> 年份：
+
+    <input type="text" class="calendar_year" style="margin-right:100px;margin-top:100px;height: 25px;border-radius: 5px;outline: none;"> 月份：
+
+    <input type="text" class="calendar_month" style="margin-right:100px;margin-top:100px;height: 25px;border-radius: 5px;outline: none;"> 季度：
+
+    <input type="text" class="calendar_quarter" style="margin-right:100px;margin-top:100px;height: 25px;border-radius: 5px;outline: none;"> 上下半年：
+
+    <input type="text" class="calendar_half" style="margin-right:100px;margin-top:100px;height: 25px;border-radius: 5px;outline: none;">
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/hywdate.js"></script>
+
+    <script>
+        //日期
+        $(".calendar_date").calendar({
+            type: "date"
+        });
+
+        //年份
+        $(".calendar_year").calendar({
+            type: "year"
+        });
+
+        //月份
+        $(".calendar_month").calendar({
+            type: "month"
+        });
+
+        //季度
+        $(".calendar_quarter").calendar({
+            type: "quarter"
+        });
+
+        //上下半年
+        $(".calendar_half").calendar({
+            type: "half"
+        });
+    </script>
+</body>
+
+</html>

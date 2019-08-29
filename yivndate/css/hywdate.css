@@ -1,0 +1,315 @@
+/**
+ * @author: HYW
+ * @date: 2019-05-6
+ * @description: 日期组件
+ */
+
+
+/* 字体库引用 */
+
+@font-face {
+    font-family: "iconfont";
+    src: url('../font/iconfont.eot?t=1557026281326');
+    /* IE9 */
+    src: url('../font/iconfont.eot?t=1557026281326#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAN0AAsAAAAACEAAAAMoAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDKgqDSIMEATYCJAMUCwwABCAFhG0HZxsnBxHVk+9kXyXwpmxdmmBCDAh0Ijhwjb6o46s7MTGppXGPhTXx8N9+tPtm5v+ddU2CqCXxRBRNJI9shczpVBqVkGgmUazROBpXc4CblK7C7eMhPtXg3XaoUJXaOyTkj1IC44Kb7IC6GXI0RTfnqn4UNsIM5Vv06AtJ21F2WZ4CIO3rVQ6Oma6paZoHNNGhZCRGA84GOpDuj6J/on9AfAvxzKcgr+DmxwS6zFktDh8diQFb4a4KxK3rs+PAruiVgdJQhbbjYCGeQKOmo17icfL38dvGqEiajLvx1Ex0CgLP5tstGiLoYoQAwXpWyMfIWI1C3Oi0XwJaFl8t6zKz6bajetMS3+L5/PNACMcR3sVadXE7afY/XiFa3OIesJ8ShW8CwZMUkFVGApJpKm6R8Et5qAFdaLGEZ1z8PFsS3DquUvhXT2aUicoAD1XJYr1dlsdySBHPoxavDVlA6KjZNrpkcXoqVyq3603VbBErZwqNWqtctZ5VxMt91AOsjU5lESme58VdbtbgtiHU1EwHT1udmS1WK51GTT61YGQ6X292y697TXr6+4em0hDOP1Ki3r+UOvXnTJ/+baf8IYgPyQW59Wd/5IE7mOpOzi8sul80y1bre+/hOJQbB4btTVC+Xo6zpYeGDeBfylPUN5D++xry8XQF6Sn17s9cZO6Ya8+oyPNbea9k6P2/tbdEW2AK/4gAFvx1ArCrWCLX0BSjNuAbzsbaFZyJf0r0l6UZ8nUd5ShcTKhGC0g6zEJWzSMLdjU0um2GVrUPuqxy7Hi3YbeBJsrCSo8YhAHPIenzErIBr5AF+wUaY/5CayAydLlAkV3YbTH8vDoKWsUA7g/Z80S+SVdp6Q3je7BSFiW0F8qSQ9CUdT11xQlljS3LJ7aqBCQ8woU9DYeBYRbu0GuZVOdDVVHXN5WeR7NyFLSKAdwfsueJosG6avz+DeN7sDJQ12R/oSx5dGjKGkBe5RNU9yxfWT6xVSUg4REuLBuHgS353D2vQ69lmhGdD5XXj1B5ub9y/AB5chPuDzRhRaXWsFszIGkRXGFF+LspJMekJexe1KNYY3xVZww=') format('woff2'), url('../font/iconfont.woff?t=1557026281326') format('woff'), url('../font/iconfont.ttf?t=1557026281326') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('../font/iconfont.svg?t=1557026281326#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* 左双箭头图标 */
+
+.icon-left-db-arrow:before {
+    content: "\e655";
+}
+
+
+/* 右箭头图标 */
+
+.icon-right-arrow:before {
+    content: "\e600";
+}
+
+
+/* 右双箭头图标 */
+
+.icon-right-db-arrow:before {
+    content: "\e601";
+}
+
+
+/* 左箭头图标 */
+
+.icon-left-arrow:before {
+    content: "\e66c";
+}
+
+
+/* 日历样式 */
+
+a,
+a:hover {
+    color: #888;
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+#calendar-frame {
+    position: absolute;
+    display: none;
+    width: 210px;
+    padding: 0;
+    margin: 0;
+    color: #888;
+    font-family: "Microsoft Yahei";
+    background-color: #fafafa;
+    border: 1px solid #d2d2d2;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, .12); */
+    border-radius: 4px;
+    z-index: 999999;
+}
+
+.calendar-title {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.calendar-title a.title {
+    display: inline-block;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.calendar-title>span {
+    display: block;
+    position: absolute;
+    top: 0;
+    color: #ddd;
+    font-size: 20px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.calendar-title span:hover {
+    color: #888;
+}
+
+.calendar-title .arrow-pre {
+    left: 25px;
+}
+
+.calendar-title .db-arrow-pre {
+    left: 5px;
+}
+
+.calendar-title .arrow-next {
+    right: 25px;
+}
+
+.calendar-title .db-arrow-next {
+    right: 5px;
+}
+
+.calendar-week,
+.calendar-date {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.calendar-week .item,
+.calendar-date .item {
+    float: left;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.calendar-week {
+    padding-bottom: 6px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.calendar-date .item {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.calendar-date .item:hover,
+.calendar-date .item-curMonth:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-date .item-curMonth {
+    color: #333;
+    font-weight: bold;
+}
+
+.calendar-date .item-curDay,
+.calendar-date .item-curDay:hover {
+    color: #fff;
+    background-color: #516BD3;
+}
+
+
+/* 年度样式 */
+
+.years-pre {
+    left: 5px;
+}
+
+.years-next {
+    right: 5px;
+}
+
+.calendar-year {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.calendar-year>.item {
+    float: left;
+    width: 66px;
+    height: 40px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.item-curYear,
+.item-curYear:hover {
+    color: #fff;
+    background-color: #516BD3;
+}
+
+.item-disabledYear {
+    color: #d2d2d2;
+}
+
+.calendar-year>.item-cursor {
+    cursor: not-allowed !important;
+}
+
+
+/* 月份选择框样式 */
+
+.calendar-month>.item {
+    float: left;
+    width: 66px;
+    height: 39px;
+    text-align: center;
+    line-height: 39px;
+    font-size: 14px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.calendar-month {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.curMonth,
+.curMonth:hover {
+    color: #fff;
+    background-color: #516BD3;
+}
+
+
+/* 季度选择框样式 */
+
+.calendar-quarter {
+    overflow: hidden;
+    padding: 10px 5px;
+}
+
+.calendar-quarter>.item {
+    float: left;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    margin: 5px 0px 5px 50px;
+    cursor: pointer;
+}
+
+.item-curQuarter,
+.item-curQuarter:hover {
+    color: #fff;
+    background-color: #516BD3;
+}
+
+
+/* 上下半年选择框 */
+
+.calendar-half {
+    overflow: hidden;
+    padding: 30px 5px;
+}
+
+.calendar-half>.item {
+    float: left;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0px 10px 50px;
+    cursor: pointer;
+}
+
+.item-curHalf,
+.item-curHalf:hover {
+    color: #fff;
+    background-color: #516BD3;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+/* 日期弹窗工具栏样式 */
+
+.calendar-toolbar {
+    width: 210px;
+    height: 35px;
+    border-top: 1px solid #d2d2d2;
+    /* border: 1px solid red; */
+}
+
+.calendar-toolbar a {
+    float: right;
+    width: 40px;
+    height: 25px;
+    border: 1px solid #d2d2d2;
+    text-align: center;
+    line-height: 25px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 4px;
+    border-radius: 2px;
+}

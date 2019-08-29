@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AutoComplete</title>
     <link rel="stylesheet" href="css/autocomplete.css">
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/autocomplete.js"></script>
 
     <style>
         html,
@@ -72,47 +70,62 @@
         </div>
     </div>
 
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/autocomplete.js"></script>
     <script>
         var aa = $("#search-content").autocomplete({
-            list: [12, 34, 67, 89]
-                //ajax: true,
-                //outerHandle: putAjax
+            //list: [12, 34, 67, 89]
+            ajax: true,
+            outerHandle: putAjax
         });
 
         function putAjax(val) {
-            // console.log(val);
-            var returnData;
+            var returnData = [],
+                resultData;
             var cont = {
-                action: "GET_ZJ_LINE_BASEINFO_PRJ_LINE",
-                content: JSON.stringify({
-                    'LOCA_NAME': "在建工程",
-                    'PRJ_NAME': val
-                }),
-                token: "admin|04da4e807e10466e8f718872f94f733a"
+                'LOCA_NAME': "在建工程",
+                'PRJ_NAME': val
+            };
+
+            resultData = plugInAjax("GET_ZJ_LINE_BASEINFO_PRJ_LINE", cont);
+
+            if (resultData.tableData && resultData.tableData.length) {
+                resultData.tableData.forEach(function(item) {
+                    returnData.push(item.PRJ_NAME);
+                });
             }
 
+            return returnData;
+        }
+
+        function plugInAjax(action, cont) {
+            var returnData;
+            if (!cont) {
+                cont = {};
+            }
+            var content = {
+                action: action,
+                content: JSON.stringify(cont),
+                token: "admin|04da4e807e10466e8f718872f94f733a"
+            }
             $.ajax({
 
                 async: false, //同步或异步获取
                 type: "get",
                 url: "http://192.168.200.132:8081/DCIWebService/rest/hyzj",
-                data: cont,
+                data: content,
                 dataType: "json", //数据格式设置为json
                 success: function(result) {
-                    var arr = [];
-                    //return
-
-                    returnData = result;
-                    console.log(result);
+                    returnData = result.data;
                 },
                 error: function(request, textStatus, errorThrown) {
                     console.log(errorThrown); //失败则直接打印错误
                 }
             });
 
+            return returnData;
         }
-
-        //function rmDuplicOfObj()
     </script>
 
 </body>
