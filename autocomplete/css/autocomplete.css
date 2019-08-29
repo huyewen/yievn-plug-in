@@ -1,0 +1,23 @@
+ul.autocomplete-list {
+    position: absolute;
+    /* height: 200px; */
+    padding: 0px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 14px;
+}
+
+ul.autocomplete-list>.autocomplete-list-item {
+    width: 100%;
+    height: 28px;
+    padding: 0px 10px;
+    line-height: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+ul.autocomplete-list>.autocomplete-list-item:hover {}

@@ -18,7 +18,6 @@
         };
 
         $.extend(true, this.options, options);
-        //console.log(options);
         this.init();
     }
 
@@ -27,13 +26,13 @@
 
         init: function() {
             var that = this;
-            var cpLock = true;
+            // var cpLock = true;
 
             this.element.on("keyup", function(e) {
                 var flag = e.target.isNeedPrevent;
                 var _this = this;
                 setTimeout(function() {
-                    if (!flag && $(_this).val() != '') {
+                    if (!flag) {
                         that.handle($(_this).val());
                     }
                 }, 0)
@@ -45,7 +44,7 @@
             });
 
             this.element.on("input", function(e) {
-                if (!e.target.keyEvent && $(this).val() != '') {
+                if (!e.target.keyEvent) {
                     that.handle($(this).val());
                 }
             })
@@ -67,16 +66,19 @@
             //     this.print();
 
             // } else 
+            $("body").find("ul.autocomplete-list").remove();
 
-            if (this.options.ajax) { //需要请求数据,必须使用outerHandle来获取请求的数据，具体如何获得需要自己实现，这里只需获得一个处理后的返回数组
+            if (val != 0) {
 
-                this.setList(this.rmDuplicOfArr(this.options.outerHandle(val)));
-                this.print();
+                if (this.options.ajax) { //需要请求数据,必须使用outerHandle来获取请求的数据，具体如何获得需要自己实现，这里只需获得一个处理后的返回数组
 
-            } else {
-                alert("无查询来源")
+                    this.setList(this.rmDuplicOfArr(this.options.outerHandle(val)));
+                    this.print();
+
+                } else {
+                    alert("无查询来源")
+                }
             }
-
         },
 
         selectItems: function() { //获得相匹配的选项
@@ -84,10 +86,44 @@
         },
 
         print: function() { //打印选项
-            console.log(this.options.list);
-            var $auto_list = $('<ul class="autocomple-list"></ul>');
 
+            var that = this;
+            var position = this.element.offset(),
+                _width = this.element.outerWidth(),
+                _left = position.left,
+                _top = position.top + this.element.outerHeight() - 5,
+                itemHeight = 28;
 
+            var $auto_list = $('<ul class="autocomplete-list"></ul>').hide();
+
+            $auto_list.css({
+                "left": _left + "px",
+                "top": _top + "px",
+                "width": _width + "px",
+            });
+
+            if (this.options.list && this.options.list.length) {
+
+                var html = '';
+                this.options.list.forEach(function(item) {
+                    html += '<li class="autocomplete-list-item">' + item + '</li>';
+                });
+                $auto_list.append(html);
+
+                $("body").append($auto_list);
+                $auto_list.show();
+
+                $(".autocomplete-list-item").on("click", function() {
+                    that.element.val($(this).text());
+                });
+
+            }
+
+            window.onresize = function() { //当窗口大小改变时，日期选择框的位置紧跟输入框
+                var position = that.element.offset(); //获得依靠元素在视口的位置
+                $auto_list.css("left", position.left);
+                $auto_list.css("top", position.top + that.element.outerHeight()) - 5; //将选择框放置在绑定元素的下方
+            }
         },
 
         setList: function(list) { //设置列表
@@ -102,16 +138,10 @@
 
     }
 
-    // $.fn.autocomplete = function(options) {
-    //     return new AutoComplete($(this), options);
-    // }
-
     $.fn.extend({
         autocomplete: function(options) {
             return new AutoComplete($(this), options);
         }
     })
-
-
 
 })(jQuery, window, document);
